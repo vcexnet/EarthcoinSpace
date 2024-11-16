@@ -111,6 +111,11 @@ class BlocksRepository {
   public async $saveBlockInDatabase(block: BlockExtended) {
     const truncatedCoinbaseSignature = block?.extras?.coinbaseSignature?.substring(0, 500);
     const truncatedCoinbaseSignatureAscii = block?.extras?.coinbaseSignatureAscii?.substring(0, 500);
+    
+    // SANDO: fix for leangth of AUX-POW headers
+    var subheader = block.extras.header;
+    if (subheader.length > 160)
+        subheader = subheader.substring(0,160);
 
     try {
       const query = `INSERT INTO blocks(
@@ -164,7 +169,7 @@ class BlocksRepository {
         block.extras.avgFee,
         block.extras.avgFeeRate,
         block.mediantime,
-        block.extras.header,
+        subheader,
         block.extras.coinbaseAddress,
         block.extras.coinbaseAddresses ? JSON.stringify(block.extras.coinbaseAddresses) : null,
         truncatedCoinbaseSignature,
