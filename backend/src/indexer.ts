@@ -37,12 +37,17 @@ class Indexer {
   public async checkAvailableCoreIndexes(): Promise<void> {
     const updatedCoreIndexes: CoreIndex[] = [];
 
-    const indexes: any = await bitcoinClient.getIndexInfo();
+    // SANDO: temporary workaround for daemon without getIndexInfo method
+    //const indexes: any = await bitcoinClient.getIndexInfo();
+    const blockInfo = await bitcoinClient.getBlockchainInfo(); 
+    let isSynced = ( blockInfo.blocks == blockInfo.headers );
+    const indexes = { "txindex": { "synced": isSynced, "best_block_height": 0}, "basic block filter index": { "synced": isSynced, "best_block_height": 0 }};
     for (const indexName in indexes) {
       const newState = {
         name: indexName,
         synced: indexes[indexName].synced,
-        best_block_height: indexes[indexName].best_block_height,
+        best_block_height: blockInfo.blocks,
+        //best_block_height: indexes[indexName].best_block_height,
       };
       logger.info(`Core index '${indexName}' is ${indexes[indexName].synced ? 'synced' : 'not synced'}. Best block height is ${indexes[indexName].best_block_height}`);      
       updatedCoreIndexes.push(newState);
