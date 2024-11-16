@@ -40,7 +40,7 @@ class Indexer {
     // SANDO: temporary workaround for daemon without getIndexInfo method
     //const indexes: any = await bitcoinClient.getIndexInfo();
     const blockInfo = await bitcoinClient.getBlockchainInfo(); 
-    let isSynced = ( blockInfo.blocks == blockInfo.headers );
+    var isSynced = ( blockInfo.blocks == blockInfo.headers );
     const indexes = { "txindex": { "synced": isSynced, "best_block_height": 0}, "basic block filter index": { "synced": isSynced, "best_block_height": 0 }};
     for (const indexName in indexes) {
       const newState = {
