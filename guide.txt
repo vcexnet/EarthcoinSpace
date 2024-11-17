@@ -19,6 +19,7 @@ cd Earthcoin
 ./configure --without-gui --disable-wallet --disable-tests --disable-man --without-miniupnpc 
 
 make -j$(nproc)
+
 sudo make install
 
 cd ~
