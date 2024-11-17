@@ -1,5 +1,5 @@
 How to deplout mempool explorer on Ubuntu 24.10 server? 
-*Disk space required >=100 GB.
+*Disk space required >=40 GB.
 
 
 1.) Build and run the devel branch of Earthcoin daemon.
