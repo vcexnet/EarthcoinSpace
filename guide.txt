@@ -1,0 +1,107 @@
+How to deplout mempool explorer on Ubuntu 24.10 server? 
+*Disk space required >=100 GB.
+
+
+1.) Build and run the devel branch of Earthcoin daemon.
+
+sudo apt update
+
+sudo apt upgrade
+
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev libdb-dev libdb++-dev libminiupnpc-dev libzmq3-dev git
+
+## git clone https://github.com/Sandokaaan/Earthcoin.git
+git clone -b devel https://github.com/Sandokaaan/Earthcoin.git
+
+cd Earthcoin
+
+## git checkout -b devel
+## git pull origin devel
+
+./autogen.sh
+
+./configure --without-gui --disable-wallet --disable-tests --disable-man --without-miniupnpc 
+
+make -j$(nproc)
+sudo make install
+
+cd ~
+
+mkdir .earthcoin
+
+echo -e "rpcuser=USERNAME\nrpcpassword=P4SSW0RD\nrpcallowip=127.0.0.1\nrpcport=15678\ndaemon=1\nserver=1\nnoirc=1\ngen=0\ntestnet=0\nlisten=1\ntxindex=1\naddressindex=1\ntimestampindex=1\nspentindex=1\nmaxconnections=100\naddnode=46.28.107.182\n" > .earthcoin/earthcoin.conf
+
+earthcoind --daemon
+
+## wait for full sync
+
+
+2.) Build and run Fulcrum
+
+sudo apt-get install qt5-qmake qtbase5-dev g++ libboost-all-dev libssl-dev libleveldb-dev libbz2-dev
+
+git clone https://github.com/Sandokaaan/EarthcoinFulcrum.git
+
+cd EarthcoinFulcrum
+
+qmake
+
+make -j$(nproc)
+
+sudo make install
+
+cd ~
+
+mkdir fcdata
+
+Fulcrum -D ~/fcdata -b localhost:15678 -u USERNAME -p P4SSW0RD -t 127.0.0.1:50001 
+
+## wait for full sync. Let the process run in the background, e.g. in screen. I will deliver the launch as a service later
+
+
+3. Build and run Mempool backend
+
+sudo apt-get install mariadb-server mariadb-client nodejs npm rustc cargo jq
+
+sudo mariadb
+
+drop database mempool;
+
+create database mempool;
+
+grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
+
+quit
+
+git clone https://github.com/Sandokaaan/EarthcoinMempool.git
+
+cd EarthcoinMempool/backend
+
+npm install --no-install-links
+
+npm run build
+
+jq '.CORE_RPC.PORT = 1567 | .CORE_RPC.USERNAME = "USERNAME" | .CORE_RPC.PASSWORD = "P4SSW0RD" | .ELECTRUM.PORT = 50001 | .ELECTRUM.TLS_ENABLED = false | .SECOND_CORE_RPC.PORT = 1567 | .SECOND_CORE_RPC.USERNAME = "USERNAME" | .SECOND_CORE_RPC.PASSWORD = "P4SSW0RD" | .DATABASE.SOCKET = "/var/run/mysqld/mysqld.sock"' mempool-config.sample.json > mempool-config.json
+
+npm run start
+
+## wait for full sync. Let the process run in the background, e.g. in screen. I will deliver the launch as a service later
+
+
+4. Frontend
+
+cd ~/EarthcoinMempool/frontend/dist/mempool 
+
+npm install
+
+npm run build
+
+sudo apt install nginx
+
+sudo ln -s ~/EarthcoinMempool/frontend/dist/mempool /var/www/
+
+sudo cp ../simplenginx.conf /etc/nginx/sites-available/default
+
+systemctl restart nginx
+
+## If everything went well, your server should now be running on your server's public ip address. I will complete the setup procedure for https on the registered domain later.
