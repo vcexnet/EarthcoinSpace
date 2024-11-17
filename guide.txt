@@ -78,7 +78,7 @@ npm install --no-install-links
 
 npm run build
 
-jq '.CORE_RPC.PORT = 1567 | .CORE_RPC.USERNAME = "USERNAME" | .CORE_RPC.PASSWORD = "P4SSW0RD" | .ELECTRUM.PORT = 50001 | .ELECTRUM.TLS_ENABLED = false | .SECOND_CORE_RPC.PORT = 1567 | .SECOND_CORE_RPC.USERNAME = "USERNAME" | .SECOND_CORE_RPC.PASSWORD = "P4SSW0RD" | .DATABASE.SOCKET = "/var/run/mysqld/mysqld.sock"' mempool-config.sample.json > mempool-config.json
+jq '.CORE_RPC.PORT = 15678 | .CORE_RPC.USERNAME = "USERNAME" | .CORE_RPC.PASSWORD = "P4SSW0RD" | .ELECTRUM.PORT = 50001 | .ELECTRUM.TLS_ENABLED = false | .SECOND_CORE_RPC.PORT = 15678 | .SECOND_CORE_RPC.USERNAME = "USERNAME" | .SECOND_CORE_RPC.PASSWORD = "P4SSW0RD" | .DATABASE.SOCKET = "/var/run/mysqld/mysqld.sock"' mempool-config.sample.json > mempool-config.json
 
 npm run start
 
