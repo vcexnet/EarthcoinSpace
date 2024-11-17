@@ -90,7 +90,7 @@ npm run start
 
 4. Frontend
 
-cd ~/EarthcoinMempool/frontend/dist/mempool 
+cd ~/EarthcoinMempool/frontend
 
 npm install
 
