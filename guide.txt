@@ -87,17 +87,23 @@ npm run start
 
 4. Frontend
 
+sudo apt install nginx
+
 cd ~/EarthcoinMempool/frontend
 
 npm install
 
 npm run build
 
-sudo apt install nginx
+cd dist
 
-sudo ln -s ~/EarthcoinMempool/frontend/dist/mempool /var/www/
+find ./ -type f \( -name "*.html" -o -name "*.js" \) -exec sed -i 's|BTC|EAC|g' {} +
 
-sudo cp ../simplenginx.conf /etc/nginx/sites-available/default
+find ./ -type f \( -name "*.html" -o -name "*.js" \) -exec sed -i 's|Bitcoin|Earthcoin|g' {} +
+
+sudo cp -r ~/EarthcoinMempool/frontend/dist/mempool /var/www/
+
+sudo cp ~/EarthcoinMempool/simplenginx.conf /etc/nginx/sites-available/default
 
 systemctl restart nginx
 
