@@ -10,7 +10,6 @@ sudo apt upgrade
 
 sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev libdb-dev libdb++-dev libminiupnpc-dev libzmq3-dev git
 
-## git clone https://github.com/Sandokaaan/Earthcoin.git
 git clone -b devel https://github.com/Sandokaaan/Earthcoin.git
 
 cd Earthcoin
