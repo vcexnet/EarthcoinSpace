@@ -105,6 +105,6 @@ sudo cp -r ~/EarthcoinMempool/frontend/dist/mempool /var/www/
 
 sudo cp ~/EarthcoinMempool/simplenginx.conf /etc/nginx/sites-available/default
 
-systemctl restart nginx
+sudo systemctl restart nginx
 
 ## If everything went well, your server should now be running on your server's public ip address. I will complete the setup procedure for https on the registered domain later.
