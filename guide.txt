@@ -26,7 +26,7 @@ cd ~
 
 mkdir .earthcoin
 
-echo -e "rpcuser=USERNAME\nrpcpassword=P4SSW0RD\nrpcallowip=127.0.0.1\nrpcport=15678\ndaemon=1\nserver=1\nnoirc=1\ngen=0\ntestnet=0\nlisten=1\ntxindex=1\naddressindex=1\ntimestampindex=1\nspentindex=1\nmaxconnections=100\naddnode=46.28.107.182\n" > .earthcoin/earthcoin.conf
+echo -e "rpcuser=USERNAME\nrpcpassword=P4SSW0RD\nrpcallowip=127.0.0.1\nrpcport=15678\ndaemon=1\nserver=1\nnoirc=1\ngen=0\ntestnet=0\nlisten=1\ntxindex=1\naddressindex=1\ntimestampindex=1\nspentindex=1\nmaxconnections=100\n" > .earthcoin/earthcoin.conf
 
 earthcoind --daemon
 
