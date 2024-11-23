@@ -58,7 +58,13 @@ Fulcrum -D ~/fcdata -b localhost:15678 -u USERNAME -p P4SSW0RD -t 127.0.0.1:5000
 
 3. Build and run Mempool backend
 
-sudo apt-get install mariadb-server mariadb-client nodejs npm rustc cargo jq
+sudo apt-get install mariadb-server mariadb-client nodejs npm jq curl
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+export PATH=~/.cargo/bin:$PATH
+
+rustup default 1.7.0
 
 sudo mariadb
 
@@ -94,12 +100,6 @@ cd ~/EarthcoinMempool/frontend
 npm install
 
 npm run build
-
-cd dist
-
-find ./ -type f \( -name "*.html" -o -name "*.js" \) -exec sed -i 's|BTC|EAC|g' {} +
-
-find ./ -type f \( -name "*.html" -o -name "*.js" \) -exec sed -i 's|Bitcoin|Earthcoin|g' {} +
 
 sudo cp -r ~/EarthcoinMempool/frontend/dist/mempool /var/www/
 
