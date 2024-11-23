@@ -145,7 +145,7 @@ export class LbtcPegsGraphComponent implements OnInit, OnChanges {
       series: [
         {
           data: pegSeries,
-          name: 'L-BTC',
+          name: 'L-EAC',
           color: '#116761',
           type: 'line',
           stack: 'total',
@@ -162,7 +162,7 @@ export class LbtcPegsGraphComponent implements OnInit, OnChanges {
         },
         {
           data: reservesSeries,
-          name: 'BTC',
+          name: 'EAC',
           color: '#EA983B',
           type: 'line',
           smooth: true,

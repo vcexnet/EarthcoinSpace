@@ -20,15 +20,15 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class BitcoinGraphsRoutingModule { }
+export class EarthcoinGraphsRoutingModule { }
 
 @NgModule({
   imports: [
     CommonModule,
-    BitcoinGraphsRoutingModule,
+    EarthcoinGraphsRoutingModule,
   ],
 })
-export class BitcoinGraphsModule { }
+export class EarthcoinGraphsModule { }
 
 
 

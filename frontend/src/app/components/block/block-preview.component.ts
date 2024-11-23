@@ -103,7 +103,7 @@ export class BlockPreviewComponent implements OnInit, OnDestroy {
         if( this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
           this.seoService.setDescription($localize`:@@meta.description.liquid.block:See size, weight, fee range, included transactions, and more for Liquid${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
         } else {
-          this.seoService.setDescription($localize`:@@meta.description.bitcoin.block:See size, weight, fee range, included transactions, audit (expected v actual), and more for Bitcoin${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
+          this.seoService.setDescription($localize`:@@meta.description.bitcoin.block:See size, weight, fee range, included transactions, audit (expected v actual), and more for Earthcoin${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
         }
         this.isLoadingBlock = false;
         this.setBlockSubsidy();
@@ -190,7 +190,7 @@ export class BlockPreviewComponent implements OnInit, OnDestroy {
   }
 
   // TODO - Refactor this.fees/this.reward for liquid because it is not
-  // used anymore on Bitcoin networks (we use block.extras directly)
+  // used anymore on Earthcoin networks (we use block.extras directly)
   setBlockSubsidy() {
     this.blockSubsidy = 0;
   }

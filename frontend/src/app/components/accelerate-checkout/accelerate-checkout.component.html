@@ -270,7 +270,7 @@
       @if (!noCTA) {
         <div class="row mb-1">
           <div class="col-sm">
-            <h1 style="font-size: larger;"><ng-content select="[slot='cta-title']"></ng-content><span class="default-slot" i18n="accelerator.accelerate-your-transaction">Accelerate your Bitcoin transaction?</span></h1>
+            <h1 style="font-size: larger;"><ng-content select="[slot='cta-title']"></ng-content><span class="default-slot" i18n="accelerator.accelerate-your-transaction">Accelerate your Earthcoin transaction?</span></h1>
           </div>
         </div>
       }
@@ -361,7 +361,7 @@
         <div class="row text-center justify-content-center mx-2">
           <p i18n="accelerator.payment-to-mempool-space">Payment to mempool.space for acceleration of txid <a [routerLink]="'/tx/' + tx.txid" target="_blank">{{ tx.txid.substr(0, 10) }}..{{ tx.txid.substr(-10) }}</a></p>
         </div>
-        @if (canPayWithBalance || !(canPayWithBitcoin || canPayWithCashapp)) {
+        @if (canPayWithBalance || !(canPayWithEarthcoin || canPayWithCashapp)) {
           <div class="row">
             <div class="col-sm text-center d-flex flex-column justify-content-center align-items-center">
               <p><ng-container i18n="accelerator.your-account-will-be-debited">Your account will be debited no more than</ng-container>&nbsp;<small style="font-family: monospace;">{{ cost | number }}</small>&nbsp;<span class="symbol" i18n="shared.sats">sats</span></p>
@@ -372,7 +372,7 @@
           </div>
         } @else {
           <div class="row">
-            @if (canPayWithBitcoin) {
+            @if (canPayWithEarthcoin) {
               <div class="col-sm text-center d-flex flex-column justify-content-center align-items-center">
                 @if (invoice) {
                   <p><ng-container i18n="transaction.pay|Pay button label">Pay</ng-container>&nbsp;<span><small style="font-family: monospace;">{{ ((invoice.btcDue * 100_000_000) || cost) | number }}</small>&nbsp;<span class="symbol" i18n="shared.sats">sats</span></span></p>

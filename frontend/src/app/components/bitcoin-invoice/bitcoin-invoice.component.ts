@@ -11,7 +11,7 @@ import { ServicesApiServices } from '@app/services/services-api.service';
   templateUrl: './bitcoin-invoice.component.html',
   styleUrls: ['./bitcoin-invoice.component.scss']
 })
-export class BitcoinInvoiceComponent implements OnInit, OnChanges, OnDestroy {
+export class EarthcoinInvoiceComponent implements OnInit, OnChanges, OnDestroy {
   @Input() invoice;
   @Input() redirect = true;
   @Input() minimal = false;
@@ -84,7 +84,7 @@ export class BitcoinInvoiceComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get availableMethods(): string[] {
-    return Object.keys(this.invoice?.addresses || {}).filter(k => k === 'BTC_LightningLike');
+    return Object.keys(this.invoice?.addresses || {}).filter(k => k === 'EAC_LightningLike');
   }
 
   bypassSecurityTrustUrl(text: string): SafeUrl {

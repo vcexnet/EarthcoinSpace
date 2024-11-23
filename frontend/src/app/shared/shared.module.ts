@@ -112,12 +112,12 @@ import { ClockchainComponent } from '@components/clockchain/clockchain.component
 import { ClockFaceComponent } from '@components/clock-face/clock-face.component';
 import { ClockComponent } from '@components/clock/clock.component';
 import { CalculatorComponent } from '@components/calculator/calculator.component';
-import { BitcoinsatoshisPipe } from '@app/shared/pipes/bitcoinsatoshis.pipe';
+import { EarthcoinsatoshisPipe } from '@app/shared/pipes/bitcoinsatoshis.pipe';
 import { HttpErrorComponent } from '@app/shared/components/http-error/http-error.component';
 import { TwitterWidgetComponent } from '@components/twitter-widget/twitter-widget.component';
 import { FaucetComponent } from '@components/faucet/faucet.component';
 import { TwitterLogin } from '@components/twitter-login/twitter-login.component';
-import { BitcoinInvoiceComponent } from '@components/bitcoin-invoice/bitcoin-invoice.component';
+import { EarthcoinInvoiceComponent } from '@components/bitcoin-invoice/bitcoin-invoice.component';
 
 import { OnlyVsizeDirective, OnlyWeightDirective } from '@app/shared/components/weight-directives/weight-directives';
 
@@ -215,7 +215,7 @@ import { OnlyVsizeDirective, OnlyWeightDirective } from '@app/shared/components/
     TestnetAlertComponent,
     GlobalFooterComponent,
     CalculatorComponent,
-    BitcoinsatoshisPipe,
+    EarthcoinsatoshisPipe,
     BlockViewComponent,
     EightBlocksComponent,
     MempoolBlockViewComponent,
@@ -235,7 +235,7 @@ import { OnlyVsizeDirective, OnlyWeightDirective } from '@app/shared/components/
     TwitterWidgetComponent,
     FaucetComponent,
     TwitterLogin,
-    BitcoinInvoiceComponent,
+    EarthcoinInvoiceComponent,
   ],
   imports: [
     CommonModule,
@@ -367,8 +367,8 @@ import { OnlyVsizeDirective, OnlyWeightDirective } from '@app/shared/components/
     HttpErrorComponent,
     TwitterWidgetComponent,
     TwitterLogin,
-    BitcoinInvoiceComponent,
-    BitcoinsatoshisPipe,
+    EarthcoinInvoiceComponent,
+    EarthcoinsatoshisPipe,
 
     MempoolBlockOverviewComponent,
     ClockchainComponent,

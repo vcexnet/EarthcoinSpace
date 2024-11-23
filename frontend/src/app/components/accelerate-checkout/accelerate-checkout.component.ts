@@ -214,11 +214,11 @@ export class AccelerateCheckout implements OnInit, OnDestroy {
       this.insertSquare();
       this.enterpriseService.goal(8);
     }
-    if (this._step === 'checkout' && this.canPayWithBitcoin) {
+    if (this._step === 'checkout' && this.canPayWithEarthcoin) {
       this.btcpayInvoiceFailed = false;
       this.loadingBtcpayInvoice = true;
       this.invoice = null;
-      this.requestBTCPayInvoice();
+      this.requestEACPayInvoice();
     } else if (this._step === 'cashapp' && this.cashappEnabled) {
       this.loadingCashapp = true;
       this.setupSquare();
@@ -324,9 +324,9 @@ export class AccelerateCheckout implements OnInit, OnDestroy {
             return;
           }
 
-          if (this.step === 'checkout' && this.canPayWithBitcoin && !this.loadingBtcpayInvoice) {
+          if (this.step === 'checkout' && this.canPayWithEarthcoin && !this.loadingBtcpayInvoice) {
             this.loadingBtcpayInvoice = true;
-            this.requestBTCPayInvoice();
+            this.requestEACPayInvoice();
           }
 
           this.calculating = false;
@@ -750,10 +750,10 @@ export class AccelerateCheckout implements OnInit, OnDestroy {
   }
 
   /**
-   * BTCPay
+   * EACPay
    */
-  async requestBTCPayInvoice(): Promise<void> {
-    this.servicesApiService.generateBTCPayAcceleratorInvoice$(this.tx.txid, this.userBid).pipe(
+  async requestEACPayInvoice(): Promise<void> {
+    this.servicesApiService.generateEACPayAcceleratorInvoice$(this.tx.txid, this.userBid).pipe(
       switchMap(response => {
         return this.servicesApiService.retreiveInvoice$(response.btcpayInvoiceId);
       }),
@@ -794,7 +794,7 @@ export class AccelerateCheckout implements OnInit, OnDestroy {
     return Object.keys(this.estimate?.availablePaymentMethods || {}) as PaymentMethod[];
   }
 
-  get couldPayWithBitcoin(): boolean {
+  get couldPayWithEarthcoin(): boolean {
     return !!this.estimate?.availablePaymentMethods?.bitcoin;
   }
 
@@ -827,10 +827,10 @@ export class AccelerateCheckout implements OnInit, OnDestroy {
   }
 
   get couldPay(): boolean {
-    return this.couldPayWithBalance || this.couldPayWithBitcoin || this.couldPayWithCashapp || this.couldPayWithApplePay || this.couldPayWithGooglePay;
+    return this.couldPayWithBalance || this.couldPayWithEarthcoin || this.couldPayWithCashapp || this.couldPayWithApplePay || this.couldPayWithGooglePay;
   }
 
-  get canPayWithBitcoin(): boolean {
+  get canPayWithEarthcoin(): boolean {
     const paymentMethod = this.estimate?.availablePaymentMethods?.bitcoin;
     return paymentMethod && this.cost >= paymentMethod.min && this.cost <= paymentMethod.max;
   }
@@ -892,7 +892,7 @@ export class AccelerateCheckout implements OnInit, OnDestroy {
   }
 
   get canPay(): boolean {
-    return this.canPayWithBalance || this.canPayWithBitcoin || this.canPayWithCashapp || this.canPayWithApplePay || this.canPayWithGooglePay;
+    return this.canPayWithBalance || this.canPayWithEarthcoin || this.canPayWithCashapp || this.canPayWithApplePay || this.canPayWithGooglePay;
   }
 
   get hasAccessToBalanceMode(): boolean {

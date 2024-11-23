@@ -18,7 +18,7 @@ export class TermsOfServiceComponent {
 
   ngOnInit(): void {
     this.seoService.setTitle('Terms of Service');
-    this.seoService.setDescription('Out of respect for the Bitcoin community, the mempool.space website is Bitcoin Only and does not display any advertising.');
+    this.seoService.setDescription('Out of respect for the Earthcoin community, the mempool.space website is Earthcoin Only and does not display any advertising.');
     this.ogService.setManualOgImage('tos.jpg');
   }
 }

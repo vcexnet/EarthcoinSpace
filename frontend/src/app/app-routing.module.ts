@@ -22,7 +22,7 @@ let routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -45,7 +45,7 @@ let routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -60,7 +60,7 @@ let routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -83,7 +83,7 @@ let routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -103,7 +103,7 @@ let routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -126,7 +126,7 @@ let routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -138,7 +138,7 @@ let routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+    loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
     data: { preload: true },
   },
   {
@@ -212,7 +212,7 @@ let routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+    loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.EarthcoinGraphsModule),
     data: { preload: true },
   },
 ];
