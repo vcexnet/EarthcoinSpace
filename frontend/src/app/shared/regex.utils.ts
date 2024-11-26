@@ -33,7 +33,7 @@ const ADDRESS_CHARS: {
   };
 } = {
   mainnet: {
-    base58: `[13]` // Starts with a single 1 or 3
+    base58: `[eE]` // Starts with a single 1 or 3
       + BASE58_CHARS
       + `{26,33}`, // Repeat the previous char 26-33 times.
       // Version byte 0x00 (P2PKH) can be as short as 27 characters, up to 34 length
