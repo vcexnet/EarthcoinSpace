@@ -256,7 +256,7 @@ class PriceUpdater {
     if (config.FIAT_PRICE.API_KEY && this.latestPrices.USD > 0 && Object.keys(this.latestConversionsRatesFromFeed).length > 0) {
       for (const conversionCurrency of this.newCurrencies) {
         if (this.latestConversionsRatesFromFeed[conversionCurrency] > 0 && this.latestPrices.USD * this.latestConversionsRatesFromFeed[conversionCurrency] < MAX_PRICES[conversionCurrency]) {
-          this.latestPrices[conversionCurrency] = parseFloat(this.latestPrices.USD * this.latestConversionsRatesFromFeed[conversionCurrency].toFixed(8));
+          this.latestPrices[conversionCurrency] = parseFloat((this.latestPrices.USD * this.latestConversionsRatesFromFeed[conversionCurrency]).toFixed(8));
         }
       }
     }
@@ -456,17 +456,17 @@ class PriceUpdater {
       }
 
       const prices: ApiPrice = this.getEmptyPricesObj();
-      
+
       let willInsert = false;
       for (const conversionCurrency of this.newCurrencies.concat(missingLegacyCurrencies)) {
         if (conversionRates[yearMonthTimestamp][conversionCurrency] > 0 && priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency] < MAX_PRICES[conversionCurrency]) {
-          prices[conversionCurrency] = parseFloat(priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency].toFixed(8));
+          prices[conversionCurrency] = parseFloat((priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency]).toFixed(8));
           willInsert = true;
         } else {
           prices[conversionCurrency] = 0;
         }
       }
-      
+
       if (willInsert) {
         await PricesRepository.$saveAdditionalCurrencyPrices(priceTime.time, prices, missingLegacyCurrencies);
         ++totalInserted;
