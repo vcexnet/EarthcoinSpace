@@ -3,11 +3,12 @@ import path from 'path';
 import config from '../config';
 import logger from '../logger';
 import PricesRepository, { ApiPrice, MAX_PRICES } from '../repositories/PricesRepository';
-import BitfinexApi from './price-feeds/bitfinex-api';
-import BitflyerApi from './price-feeds/bitflyer-api';
-import CoinbaseApi from './price-feeds/coinbase-api';
-import GeminiApi from './price-feeds/gemini-api';
-import KrakenApi from './price-feeds/kraken-api';
+//import BitfinexApi from './price-feeds/bitfinex-api';
+//import BitflyerApi from './price-feeds/bitflyer-api';
+//import CoinbaseApi from './price-feeds/coinbase-api';
+//import GeminiApi from './price-feeds/gemini-api';
+//import KrakenApi from './price-feeds/kraken-api';
+import XeggexApi from './price-feeds/xeggex-api';
 import FreeCurrencyApi from './price-feeds/free-currency-api';
 
 export interface PriceFeed {
@@ -54,10 +55,10 @@ class PriceUpdater {
   private lastHistoricalRun = 0;
   private running = false;
   private feeds: PriceFeed[] = [];
-  private currencies: string[] = ['USD', 'EUR', 'GBP', 'CAD', 'CHF', 'AUD', 'JPY'];
+  private currencies: string[] = ['USD'];
   private latestPrices: ApiPrice;
   private currencyConversionFeed: ConversionFeed | undefined;
-  private newCurrencies: string[] = ['BGN', 'BRL', 'CNY', 'CZK', 'DKK', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'ISK', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RON', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'ZAR'];
+  private newCurrencies: string[] = ['EUR', 'GBP', 'CAD', 'CHF', 'AUD', 'JPY', 'BGN', 'BRL', 'CNY', 'CZK', 'DKK', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'ISK', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RON', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'ZAR'];
   private lastTimeConversionsRatesFetched: number = 0;
   private latestConversionsRatesFromFeed: ConversionRates = { USD: -1 };
   private ratesChangedCallback: ((rates: ApiPrice) => void) | undefined;
@@ -65,11 +66,12 @@ class PriceUpdater {
   constructor() {
     this.latestPrices = this.getEmptyPricesObj();
 
-    this.feeds.push(new BitflyerApi()); // Does not have historical endpoint
-    this.feeds.push(new KrakenApi());
-    this.feeds.push(new CoinbaseApi());
-    this.feeds.push(new BitfinexApi());
-    this.feeds.push(new GeminiApi());
+    //this.feeds.push(new BitflyerApi()); // Does not have historical endpoint
+    //this.feeds.push(new KrakenApi());
+    //this.feeds.push(new CoinbaseApi());
+    //this.feeds.push(new BitfinexApi());
+    //this.feeds.push(new GeminiApi());
+    this.feeds.push(new XeggexApi());
 
     this.currencyConversionFeed = new FreeCurrencyApi();
     this.setCyclePosition();
@@ -247,14 +249,14 @@ class PriceUpdater {
       if (prices.length === 0) {
         this.latestPrices[currency] = -1;
       } else {
-        this.latestPrices[currency] = Math.round(getMedian(prices));
+        this.latestPrices[currency] = parseFloat(getMedian(prices).toFixed(8));
       }
     }
 
     if (config.FIAT_PRICE.API_KEY && this.latestPrices.USD > 0 && Object.keys(this.latestConversionsRatesFromFeed).length > 0) {
       for (const conversionCurrency of this.newCurrencies) {
         if (this.latestConversionsRatesFromFeed[conversionCurrency] > 0 && this.latestPrices.USD * this.latestConversionsRatesFromFeed[conversionCurrency] < MAX_PRICES[conversionCurrency]) {
-          this.latestPrices[conversionCurrency] = Math.round(this.latestPrices.USD * this.latestConversionsRatesFromFeed[conversionCurrency]);
+          this.latestPrices[conversionCurrency] = parseFloat(this.latestPrices.USD * this.latestConversionsRatesFromFeed[conversionCurrency].toFixed(8));
         }
       }
     }
@@ -295,6 +297,7 @@ class PriceUpdater {
   private async $insertHistoricalPrices(): Promise<void> {
     const existingPriceTimes = await PricesRepository.$getPricesTimes();
 
+/*
     // Insert MtGox weekly prices
     const pricesJson: any[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'mtgox-weekly.json')).toString());
     const prices = this.getEmptyPricesObj();
@@ -318,9 +321,10 @@ class PriceUpdater {
     } else {
       logger.debug(`Inserted ${insertedCount} MtGox USD weekly price history into db`, logger.tags.mining);
     }
+*/
 
-    // Insert Kraken weekly prices
-    await new KrakenApi().$insertHistoricalPrice();
+    // Insert Xeggex weekly prices
+    await new XeggexApi().$insertHistoricalPrice();
 
     // Insert missing recent hourly prices
     await this.$insertMissingRecentPrices('day');
@@ -382,7 +386,7 @@ class PriceUpdater {
         if (grouped[time][currency].length === 0) {
           continue;
         }
-        prices[currency] = Math.round(getMedian(grouped[time][currency]));
+        prices[currency] = parseFloat(getMedian(grouped[time][currency]).toFixed(8));
       }
       await PricesRepository.$savePrices(parseInt(time, 10), prices);
       ++totalInserted;
@@ -456,7 +460,7 @@ class PriceUpdater {
       let willInsert = false;
       for (const conversionCurrency of this.newCurrencies.concat(missingLegacyCurrencies)) {
         if (conversionRates[yearMonthTimestamp][conversionCurrency] > 0 && priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency] < MAX_PRICES[conversionCurrency]) {
-          prices[conversionCurrency] = year >= 2013 ? Math.round(priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency]) : Math.round(priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency] * 100) / 100;
+          prices[conversionCurrency] = parseFloat(priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency].toFixed(8));
           willInsert = true;
         } else {
           prices[conversionCurrency] = 0;
