@@ -97,6 +97,8 @@ npm run build
 
 jq '.CORE_RPC.PORT = 15678 | .CORE_RPC.USERNAME = "USERNAME" | .CORE_RPC.PASSWORD = "P4SSW0RD" | .ELECTRUM.PORT = 50001 | .ELECTRUM.TLS_ENABLED = false | .SECOND_CORE_RPC.PORT = 15678 | .SECOND_CORE_RPC.USERNAME = "USERNAME" | .SECOND_CORE_RPC.PASSWORD = "P4SSW0RD" | .DATABASE.SOCKET = "/var/run/mysqld/mysqld.sock"' mempool-config.sample.json > mempool-config.json
 
+## !! DO NOT COPY THIS, JUST DO IT !! -> Register at freecurrencyapi.com and get a free API key. Then edit file mempool-config.json and put your API key into FIAT_PRICE.API_KEY (line 155) or disable it changing FIAT_PRICE.PAID to false.
+
 npm run start
 
 ## wait for full sync. Let the process run in the background, e.g. in screen. I will deliver the launch as a service later
