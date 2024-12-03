@@ -25,8 +25,10 @@ export class FiatCurrencyPipe implements PipeTransform {
 
     if (Math.abs(num) >= 1000) {
       return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 0 }).format(num);
-    } else {
+    } else if (Math.abs(num) >= 1) {
       return new Intl.NumberFormat(this.locale, { style: 'currency', currency }).format(num);
+    } else {
+      return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 4 }).format(num);
     }
   }
 }
