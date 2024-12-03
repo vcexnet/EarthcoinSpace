@@ -28,7 +28,7 @@ export class FiatCurrencyPipe implements PipeTransform {
     } else if (Math.abs(num) >= 1) {
       return new Intl.NumberFormat(this.locale, { style: 'currency', currency }).format(num);
     } else {
-      return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 4 }).format(num);
-    }
+      return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 5 }).format(num);
   }
+}
 }

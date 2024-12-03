@@ -851,8 +851,8 @@
         <note from="description" priority="1">about.about-the-project</note>
       </trans-unit>
       <trans-unit datatype="html" id="489827bef9fd30645fd2a217aea141ac43bd01ef">
-        <source>The mempool open-source project aims to implement a high quality explorer and visualization website for the entire Bitcoin ecosystem, without distractions like altcoins, advertising, or third-party trackers.</source>
-        <target>O projeto de código aberto mempool visa implementar um explorador de alta qualidade e um site de visualização para todo o ecossistema Bitcoin, sem distrações como altcoins, publicidade ou rastreadores de terceiros.</target>
+        <source>The mempool open-source project aims to implement a high quality explorer and visualization website for the entire Earthcoin ecosystem, without distractions like altcoins, advertising, or third-party trackers.</source>
+        <target>O projeto de código aberto mempool visa implementar um explorador de alta qualidade e um site de visualização para todo o ecossistema Earthcoin, sem distrações como altcoins, publicidade ou rastreadores de terceiros.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">16</context>

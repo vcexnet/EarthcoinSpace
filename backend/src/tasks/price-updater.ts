@@ -296,7 +296,6 @@ class PriceUpdater {
    */
   private async $insertHistoricalPrices(): Promise<void> {
     const existingPriceTimes = await PricesRepository.$getPricesTimes();
-
 /*
     // Insert MtGox weekly prices
     const pricesJson: any[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'mtgox-weekly.json')).toString());
@@ -325,7 +324,6 @@ class PriceUpdater {
 
     // Insert Xeggex weekly prices
     await new XeggexApi().$insertHistoricalPrice();
-
     // Insert missing recent hourly prices
     await this.$insertMissingRecentPrices('day');
     await this.$insertMissingRecentPrices('hour');
@@ -456,7 +454,7 @@ class PriceUpdater {
       }
 
       const prices: ApiPrice = this.getEmptyPricesObj();
-
+      
       let willInsert = false;
       for (const conversionCurrency of this.newCurrencies.concat(missingLegacyCurrencies)) {
         if (conversionRates[yearMonthTimestamp][conversionCurrency] > 0 && priceTime.USD * conversionRates[yearMonthTimestamp][conversionCurrency] < MAX_PRICES[conversionCurrency]) {
@@ -466,7 +464,7 @@ class PriceUpdater {
           prices[conversionCurrency] = 0;
         }
       }
-
+      
       if (willInsert) {
         await PricesRepository.$saveAdditionalCurrencyPrices(priceTime.time, prices, missingLegacyCurrencies);
         ++totalInserted;

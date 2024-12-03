@@ -24,7 +24,7 @@ export class FiatShortenerPipe implements PipeTransform {
     const currency = args[1] || this.currency || 'USD';
 
     if (num < 1) {
-      return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 4 }).format(num);
+      return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 5 }).format(num);
     } else if (num < 1000) {
       return new Intl.NumberFormat(this.locale, { style: 'currency', currency, maximumFractionDigits: 1 }).format(num);
     }
