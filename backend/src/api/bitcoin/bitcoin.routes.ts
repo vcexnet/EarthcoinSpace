@@ -29,6 +29,7 @@ class BitcoinRoutes {
       .get(config.MEMPOOL.API_URL_PREFIX + 'cpfp/:txId', this.$getCpfpInfo)
       .get(config.MEMPOOL.API_URL_PREFIX + 'difficulty-adjustment', this.getDifficultyChange)
       .get(config.MEMPOOL.API_URL_PREFIX + 'fees/recommended', this.getRecommendedFees)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'fees/recommended/kb', this.getRecommendedFeesKb)
       .get(config.MEMPOOL.API_URL_PREFIX + 'fees/mempool-blocks', this.getMempoolBlocks)
       .get(config.MEMPOOL.API_URL_PREFIX + 'backend-info', this.getBackendInfo)
       .get(config.MEMPOOL.API_URL_PREFIX + 'init-data', this.getInitData)
@@ -103,6 +104,17 @@ class BitcoinRoutes {
     const result = feeApi.getRecommendedFee();
     res.json(result);
   }
+  //fee per kb api
+  private getRecommendedFeesKb(req: Request, res: Response) {
+    if (!mempool.isInSync()) {
+      res.statusCode = 503;
+      res.send('Service Unavailable');
+      return;
+    }
+    const result = feeApi.getRecommendedFeeKb();
+    res.json(result);
+  }
+
 
   private getMempoolBlocks(req: Request, res: Response) {
     try {

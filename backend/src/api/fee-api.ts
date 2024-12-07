@@ -61,6 +61,24 @@ class FeeApi {
       'minimumFee': minimumFee,
     };
   }
+//fee per kb api
+public getRecommendedFeeKb() {
+    const fees = this.getRecommendedFee();
+    const conversionFactor = 100000; // 100,000 satoshi per BTC and 1,000 bytes per kilobyte
+    let feesPerKB = {
+      fastestFee: 0,
+      halfHourFee: 0,
+      hourFee: 0,
+      economyFee: 0,
+      minimumFee: 0
+    };
+    for (let feeType in fees) {
+      if (fees.hasOwnProperty(feeType)) {
+        feesPerKB[feeType] = fees[feeType] / conversionFactor;
+      }
+    }
+    return feesPerKB;
+  }
 
   private optimizeMedianFee(pBlock: MempoolBlock, nextBlock: MempoolBlock | undefined, previousFee?: number): number {
     const useFee = previousFee ? (pBlock.medianFee + previousFee) / 2 : pBlock.medianFee;
