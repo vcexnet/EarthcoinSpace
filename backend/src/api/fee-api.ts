@@ -6,6 +6,8 @@ import projectedBlocks from './mempool-blocks';
 const isLiquid = config.MEMPOOL.NETWORK === 'liquid' || config.MEMPOOL.NETWORK === 'liquidtestnet';
 
 interface RecommendedFees {
+  fee_per_kb: number,
+  fee_per_kb_economy: number,
   fastestFee: number,
   halfHourFee: number,
   hourFee: number,
@@ -27,6 +29,8 @@ class FeeApi {
 
     if (!pBlocks.length) {
       return {
+        'fee_per_kb': minimumFee,
+        'fee_per_kb_economy': minimumFee,
         'fastestFee': defaultMinFee,
         'halfHourFee': defaultMinFee,
         'hourFee': defaultMinFee,
@@ -54,6 +58,8 @@ class FeeApi {
     // can exceed the median rate of projected blocks in some extreme scenarios
     // (see https://bitcoin.stackexchange.com/a/120024)
     return {
+      'fee_per_kb': minimumFee,
+      'fee_per_kb_economy': economyFee,
       'fastestFee': fastestFee,
       'halfHourFee': halfHourFee,
       'hourFee': hourFee,
@@ -66,6 +72,8 @@ public getRecommendedFeeKb() {
     const fees = this.getRecommendedFee();
     const conversionFactor = 100000; // 100,000 satoshi per BTC and 1,000 bytes per kilobyte
     let feesPerKB = {
+      fee_per_kb: 0,
+      fee_per_kb_economy: 0,
       fastestFee: 0,
       halfHourFee: 0,
       hourFee: 0,
